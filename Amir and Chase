@@ -1,0 +1,24 @@
+import numpy as np
+import pandas as pd
+import fuzzywuzzy
+from fuzzywuzzy import fuzz
+from fuzzywuzzy import process
+
+df1 = pd.read_excel('constitutional_convention_1787.xlsx')
+df2 = pd.read_csv('loan_office_certificates_9_states_cleaned.csv')
+
+for value1 in df1['Unnamed: 1']:
+    for value2 in df2['Last Name 1 ']:
+        if fuzz.token_set_ratio(value1, value2) > 90:
+            for value3 in df1['Delegates to the Constitutional Convention in Philadelphia during the Summer of 1787']:
+                for value4 in df2['First Name 1 ']:
+                    if value1 is np.nan:
+                        continue
+                    elif value2 is np.nan:
+                        continue
+                    elif value3 is np.nan:
+                        continue
+                    elif value4 is np.nan:
+                        continue
+                    elif fuzz.token_set_ratio(value3, value4) > 90:
+                        print(value3, value1, "might be the same person as ", value4, value2)
